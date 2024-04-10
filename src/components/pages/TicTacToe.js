@@ -63,31 +63,46 @@ const getWinner = tiles => {
 };
 
 const useTicTacToeGameState = initialPlayer => {
-  const tiles = [];
-  const currentPlayer = initialPlayer;
+  const tiles = ['', '', '', '', '', '', '', '', ''];
+  const currentPlayer = initialPlayer; // 'X' o 'O'
   const winner = getWinner(tiles);
   const gameEnded = false;
 
   const setTileTo = (tileIndex, player) => {
     // convertir el tile en la posición tileIndex al jugador seleccionado
     // ejemplo: setTileTo(0, 'X') -> convierte la primera casilla en 'X'
+    tiles[tileIndex] = player;
   };
   const restart = () => {
     // Reiniciar el juego a su estado inicial
   };
 
-  // por si no reconocen esta sintáxis, es solamente una forma más corta de escribir:
-  // { tiles: tiles, currentPlayer: currentPlayer, ...}
   return { tiles, currentPlayer, winner, gameEnded, setTileTo, restart };
 };
 
 const TicTacToe = () => {
-  // const { tiles, currentPlayer, winner, gameEnded, setTileTo, restart } = useTicTacToeGameState('X');
+  const { tiles, currentPlayer, winner, gameEnded, setTileTo, restart } = useTicTacToeGameState('X');
   return (
     <div className="tictactoe">
+      <WinnerCard show={false} winner={"X"} onRestart={() => {}} />
       {/* Este componente debe contener la WinnerCard y 9 componentes Square, 
       separados en tres filas usando <div className="tictactoe-row">{...}</div> 
       para separar los cuadrados en diferentes filas */}
+      <div className="tictactoe-row">
+        <Square key={0} value={''} onClick={() => {setTileTo(0, currentPlayer)}} />
+        <Square key={1} value={''}  />
+        <Square key={2} value={''} />
+      </div>
+      <div className="tictactoe-row">
+        <Square key={3} value={''} />
+        <Square key={4} value={''} />
+        <Square key={5} value={''} />
+      </div>
+      <div className="tictactoe-row">
+        <Square key={6} value={''} />
+        <Square key={7} value={''} />
+        <Square key={8} value={''}/>
+      </div>
     </div>
   );
 };
