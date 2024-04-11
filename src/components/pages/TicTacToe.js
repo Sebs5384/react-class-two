@@ -78,6 +78,11 @@ const useTicTacToeGameState = initialPlayer => {
   React.useEffect(() => {
     const isTie = tiles.every(row => row.every(tile => tile !== ''));
 
+    if(winner) {
+      setGameEnded(true);
+      return;
+    };
+
     if(isTie) {
       setGameEnded(true);
       return;
