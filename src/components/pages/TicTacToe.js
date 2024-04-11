@@ -75,6 +75,15 @@ const useTicTacToeGameState = initialPlayer => {
   const winner = getWinner(tiles);
   const [gameEnded, setGameEnded] = React.useState(false);
 
+  React.useEffect(() => {
+    const isTie = tiles.every(row => row.every(tile => tile !== ''));
+
+    if(isTie) {
+      setGameEnded(true);
+      return;
+    };
+  })
+
   const setTileTo = (rowIndex, columnIndex, player) => {
     if(tiles[rowIndex][columnIndex] !== '') {
       return;
@@ -114,12 +123,17 @@ const TicTacToeBoard = ({ tiles, setTileTo, currentPlayer }) => {
     </>
   );
 };
+TicTacToeBoard.propTypes = {
+  tiles: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  setTileTo: PropTypes.func.isRequired,
+  currentPlayer: PropTypes.string.isRequired,
+};
 
 const TicTacToe = () => {
   const { tiles, currentPlayer, winner, gameEnded, setTileTo, restart } = useTicTacToeGameState('X');
   return (
     <div className="tictactoe">
-      <WinnerCard show={winner} winner={winner} onRestart={() => {restart()}} />
+      <WinnerCard show={gameEnded} winner={winner} onRestart={() => {restart()}} />
       <TicTacToeBoard tiles={tiles} setTileTo={setTileTo} currentPlayer={currentPlayer} />
     </div>
   );
