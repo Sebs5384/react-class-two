@@ -33,7 +33,7 @@ WinnerCard.propTypes = {
 };
 
 const getWinner = tiles => {
-  const lines = [
+  const winningCombinations = [
     [[0, 0], [0, 1], [0, 2]],
     [[1, 0], [1, 1], [1, 2]],
     [[2, 0], [2, 1], [2, 2]],
@@ -44,8 +44,8 @@ const getWinner = tiles => {
     [[0, 2], [1, 1], [2, 0]]
   ];
 
-  for(const line of lines) {
-    const [a, b, c] = line;
+  for(const combination of winningCombinations) {
+    const [a, b, c] = combination;
     const [rowA, columnA] = a;
     const [rowB, columnB] = b;
     const [rowC, columnC] = c;
@@ -69,8 +69,8 @@ const getMatrix = (lengthOfMatrix, value) => {
 }
 
 const useTicTacToeGameState = initialPlayer => {
-  const table = getMatrix(3, '');
-  const [tiles, setTiles] = React.useState(table);
+  const board = getMatrix(3, '');
+  const [tiles, setTiles] = React.useState(board);
   const [currentPlayer, setCurrentPlayer] = React.useState(initialPlayer);
   const winner = getWinner(tiles);
   const [gameEnded, setGameEnded] = React.useState(false);
